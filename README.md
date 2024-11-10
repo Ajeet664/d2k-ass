@@ -1,7 +1,7 @@
 Jenkins Pipeline Setup & Deployment Guide for .NET Core API
 
 This guide details the steps for setting up a Jenkins pipeline to automate the build, push, and deployment of a Dockerized .NET Core API to AWS EC2. The pipeline supports both UAT and Production environments and uses Docker Hub as the image registry.
-
+#########
 Prerequisites
 Install Jenkins and Docker on the server AWS EC2 Ubuntu server.
 Run the following commands to install Jenkins and Docker:
@@ -23,7 +23,7 @@ UAT on port 8081.
 Production on port 8082.
 GitHub Repository:
 Clone the initial dotnet-hello-world repositor
-
+#########################
 Steps to Set Up Repository and Add Files
 Step 1: Clone the Repository
 On your Ubuntu server, navigate to /var/www/ and clone the repository:
@@ -43,7 +43,7 @@ Create a new repository on my GitHub account.
 
 git remote add origin https://github.com/Ajeet664/d2k-ass.git
 git push -u origin master
-
+####################
 Step 2: Configure Jenkins and GitHub Webhook
 Configure Jenkins Credentials:
 Docker Hub: Add a Docker Hub credential with ID dockerhub in Jenkins.
@@ -58,7 +58,7 @@ Create Jenkins Pipeline Job:
 In Jenkins, create a new Pipeline job.
 Connect it to your GitHub repository https://github.com/Ajeet664/d2k-ass.git
 Set the pipeline definition to use the Jenkinsfile from repository.
-
+################
 Step 3: Run the Pipeline
 Build with Parameters:
 In Jenkins, select Build with Parameters.
@@ -68,7 +68,7 @@ Jenkins will:
 Pull the code from GitHub.
 Build the Docker image, then push it to Docker Hub.
 Deploy the image to the designated EC2 instance based on the selected environment.
-
+################
 Step 4: Verify Deployment
 UAT URL: http://98.84.242.50:8081/api/hello
 Production URL: http://98.84.242.50:8082/api/hello
