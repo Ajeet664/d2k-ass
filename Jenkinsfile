@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker') // Replace with your Jenkins Docker Hub credentials ID
+        GITHUB_CREDENTIALS = credentials('github')
         DOCKER_IMAGE_NAME = 'd2k-hello-world'
         UAT_PORT = '8081'
         PROD_PORT = '8082'
