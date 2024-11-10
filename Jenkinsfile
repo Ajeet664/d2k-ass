@@ -6,12 +6,12 @@ pipeline {
     }
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id') // Replace with your Jenkins Docker Hub credentials ID
-        DOCKER_IMAGE_NAME = 'dotnet-hello-world'
+        DOCKER_HUB_CREDENTIALS = credentials('docker') // Replace with your Jenkins Docker Hub credentials ID
+        DOCKER_IMAGE_NAME = 'd2k-hello-world'
         UAT_PORT = '8081'
         PROD_PORT = '8082'
         SERVER_IP = '98.84.242.50' // Replace with your EC2 instance IP
-        SSH_CREDENTIALS_ID = 'server-ssh-credentials-id' // Replace with your Jenkins SSH credentials ID
+        SSH_CREDENTIALS_ID = 'ec2' // Replace with your Jenkins SSH credentials ID
     }
 
     stages {
@@ -53,7 +53,7 @@ pipeline {
                     // SSH into the server and perform the deployment steps
                     sshagent([SSH_CREDENTIALS_ID]) {
                         sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@${98.84.242.50} << EOF
+                        ssh -o StrictHostKeyChecking=no ec2-user@${SERVER_IP} << EOF
                         # Pull the new Docker image from Docker Hub
                         docker pull ${DOCKER_IMAGE_NAME}:${imageTag}
 
@@ -74,4 +74,3 @@ pipeline {
         }
     }
 }
-
