@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub')  // Replace with your Jenkins Docker Hub credentials ID
-        DOCKER_IMAGE_NAME = 'd2k-hello-world'
+        DOCKER_IMAGE_NAME = 'ajityadav664/d2k-hello-world'  // Docker Hub repository name
         UAT_PORT = '8081'
         PROD_PORT = '8082'
         SERVER_IP = '98.84.242.50' // Replace with your EC2 instance IP
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Login to Docker Hub using the credentials provided in Jenkins
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         echo 'Successfully logged in to Docker Hub'
                     }
                 }
@@ -46,8 +46,8 @@ pipeline {
             steps {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
-                    // Push the image to Docker Hub with the environment tag (UAT or Production)
-                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
+                    // Push the image to your private Docker Hub repository with the environment tag (UAT or Production)
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
                 }
@@ -61,10 +61,11 @@ pipeline {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
                     def containerName = "${DOCKER_IMAGE_NAME}-${imageTag}"
 
-                    // SSH into the server and perform the deployment steps
-                    sshagent([SSH_CREDENTIALS_ID]) {
+                    // SSH into the server using private key authentication
+                    withCredentials([file(credentialsId: 'ec2-ssh-key', variable: 'SSH_PRIVATE_KEY_FILE')]) {
                         sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@${SERVER_IP} << EOF
+                        chmod 600 ${SSH_PRIVATE_KEY_FILE}
+                        ssh -i ${SSH_PRIVATE_KEY_FILE} -o StrictHostKeyChecking=no ec2-user@${SERVER_IP} << EOF
                         set -e  # Exit immediately if a command exits with a non-zero status
                         docker pull ${DOCKER_IMAGE_NAME}:${imageTag}
 
