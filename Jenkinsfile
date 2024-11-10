@@ -10,14 +10,14 @@ pipeline {
         DOCKER_IMAGE_NAME = 'dotnet-hello-world'
         UAT_PORT = '8081'
         PROD_PORT = '8082'
-        SERVER_IP = 'your.server.ip.address' // Replace with your EC2 instance IP
+        SERVER_IP = '98.84.242.50' // Replace with your EC2 instance IP
         SSH_CREDENTIALS_ID = 'server-ssh-credentials-id' // Replace with your Jenkins SSH credentials ID
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-repo-url.git' // Replace with your actual GitHub repository URL
+                git 'https://github.com/Ajeet664/d2k-ass.git/' // Replace with your actual GitHub repository URL
             }
         }
 
@@ -53,7 +53,7 @@ pipeline {
                     // SSH into the server and perform the deployment steps
                     sshagent([SSH_CREDENTIALS_ID]) {
                         sh """
-                        ssh -o StrictHostKeyChecking=no ec2-user@${SERVER_IP} << EOF
+                        ssh -o StrictHostKeyChecking=no ec2-user@${98.84.242.50} << EOF
                         # Pull the new Docker image from Docker Hub
                         docker pull ${DOCKER_IMAGE_NAME}:${imageTag}
 
