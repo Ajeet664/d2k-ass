@@ -36,7 +36,7 @@ pipeline {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
                     // Push the image to Docker Hub with the environment tag (UAT or Production)
-                    docker.withRegistry('', 'dockerhub') {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
                 }
