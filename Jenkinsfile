@@ -39,6 +39,10 @@ pipeline {
                     docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
+                    catch (e) {
+                    // If pushing fails, log the error and stop the build
+                    error "Failed to push image: ${e}"
+                    }
                 }
             }
         }
