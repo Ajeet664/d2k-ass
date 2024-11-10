@@ -36,7 +36,7 @@ pipeline {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
                     // Push the image to Docker Hub with the environment tag (UAT or Production)
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
                 }
@@ -54,7 +54,7 @@ pipeline {
                     sshagent([SSH_CREDENTIALS_ID]) {
                         sh """
                         ssh -o StrictHostKeyChecking=no ec2-user@${SERVER_IP} << EOF
-                        # Pull the new Docker image from Docker Hub
+                        set -e  # Exit immediately if a command exits with a non-zero status
                         docker pull ${DOCKER_IMAGE_NAME}:${imageTag}
 
                         # Stop and remove the old container if it exists
