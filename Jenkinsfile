@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Login to Docker Hub using the credentials provided in Jenkins
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         echo 'Successfully logged in to Docker Hub'
                     }
                 }
@@ -47,7 +47,7 @@ pipeline {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
                     // Push the image to Docker Hub with the environment tag (UAT or Production)
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
                 }
