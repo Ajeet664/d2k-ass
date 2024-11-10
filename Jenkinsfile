@@ -33,7 +33,7 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    docker.withRegistry('http://registry.hub.docker.com', 'dockerhub') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                         echo 'Successfully logged in to Docker Hub'
                     }
                 }
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
-                    docker.withRegistry('http://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
                 }
