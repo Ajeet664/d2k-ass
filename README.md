@@ -9,7 +9,7 @@ This guide details the steps for setting up a Jenkins pipeline to automate the b
 
 ### Install Jenkins and Docker on the Server (AWS EC2 Ubuntu Server)
 Run the following commands to install Jenkins and Docker:
-```bash
+
 sudo apt update
 sudo apt install -y jenkins docker.io
 sudo systemctl enable docker
