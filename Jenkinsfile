@@ -6,18 +6,18 @@ pipeline {
     }
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub')  // Replace with your Jenkins Docker Hub credentials ID
-        DOCKER_IMAGE_NAME = 'ajityadav664/d2k-hello-world'  // Docker Hub repository name
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub')  
+        DOCKER_IMAGE_NAME = 'ajityadav664/d2k-hello-world'  
         UAT_PORT = '8081'
         PROD_PORT = '8082'
-        SERVER_IP = '98.84.242.50' // Replace with your EC2 instance IP
-        SSH_CREDENTIALS_ID = 'ec2' // Replace with your Jenkins SSH credentials ID
+        SERVER_IP = '98.84.242.50' 
+        SSH_CREDENTIALS_ID = 'ec2' 
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Ajeet664/d2k-ass.git' // Replace with your actual GitHub repository URL
+                git 'https://github.com/Ajeet664/d2k-ass.git' 
             }
         }
 
@@ -25,7 +25,6 @@ pipeline {
             steps {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
-                    // Build the Docker image with the environment-specific tag
                     docker.build("${DOCKER_IMAGE_NAME}:${imageTag}")
                 }
             }
@@ -34,7 +33,6 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    // Login to Docker Hub using the credentials provided in Jenkins
                     docker.withRegistry('http://registry.hub.docker.com', 'dockerhub') {
                         echo 'Successfully logged in to Docker Hub'
                     }
@@ -46,7 +44,6 @@ pipeline {
             steps {
                 script {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
-                    // Push the image to your private Docker Hub repository with the environment tag (UAT or Production)
                     docker.withRegistry('http://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS) {
                         docker.image("${DOCKER_IMAGE_NAME}:${imageTag}").push()
                     }
@@ -61,7 +58,6 @@ pipeline {
                     def imageTag = params.ENVIRONMENT.toLowerCase()
                     def containerName = "${DOCKER_IMAGE_NAME}-${imageTag}"
 
-                    // SSH into the server using private key authentication
                     withCredentials([file(credentialsId: 'ec2-ssh-key', variable: 'SSH_PRIVATE_KEY_FILE')]) {
                         sh """
                         chmod 600 ${SSH_PRIVATE_KEY_FILE}
