@@ -33,7 +33,7 @@ A Docker Hub account is required for storing Docker images.
 - **Production**: Runs on port `8082`.
 
 ### GitHub Repository
-Clone the initial [dotnet-hello-world repository](https://github.com/doddatpivotal/dotnet-hello-world) and push it to your own GitHub account with updates.
+Clone the GitHub (https://github.com/doddatpivotal/dotnet-hello-world) 
 
 ---
 
