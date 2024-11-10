@@ -1,4 +1,4 @@
-```markdown
+
 # Jenkins Pipeline Setup & Deployment Guide for .NET Core API
 
 This guide details the steps for setting up a Jenkins pipeline to automate the build, push, and deployment of a Dockerized .NET Core API to AWS EC2. The pipeline supports both UAT and Production environments and uses Docker Hub as the image registry.
@@ -9,7 +9,7 @@ This guide details the steps for setting up a Jenkins pipeline to automate the b
 
 ### Install Jenkins and Docker on the Server (AWS EC2 Ubuntu Server)
 Run the following commands to install Jenkins and Docker:
-
+```markdown
 sudo apt update
 sudo apt install -y jenkins docker.io
 sudo systemctl enable docker
