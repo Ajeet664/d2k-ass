@@ -99,4 +99,8 @@ cd d2k-ass
 
 Check these URLs to verify that the application is running as expected in both environments.
 
+**GitHub Repository:** https://github.com/Ajeet664/d2k-ass – This repository contains the Dockerfile, Jenkinsfile, and documentation for setting up the pipeline and configuring UAT/Production deployments.
+**Docker Hub Image:** https://hub.docker.com/repository/docker/ajityadav664/d2k-hello-world/general
+
+
 --- 
