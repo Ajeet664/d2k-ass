@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Ajeet664/d2k-ass.git/' // Replace with your actual GitHub repository URL
+                git 'https://github.com/Ajeet664/d2k-ass.git' // Replace with your actual GitHub repository URL
             }
         }
 
